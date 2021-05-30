@@ -3,7 +3,9 @@ package de.tgiu.game.service;
 import de.tgiu.game.entity.Game;
 import de.tgiu.game.entity.Size;
 import org.apache.commons.lang3.EnumUtils;
+import org.jboss.logging.Logger;
 
+import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -11,11 +13,29 @@ import java.util.List;
 
 @Path("/games")
 public class GameService {
+    @Inject
+    public Logger log;
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getGames() {
         List<Game> games = Game.listAll();
+        log.info(games.size() + " games requested");
         return Response.ok().entity(games).build();
+    }
+
+    @GET
+    @Path("{name}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getGame(@PathParam("name") String name) {
+        Game game = Game.findByName(name);
+        if (game == null) {
+            log.info("Game " + name + " not found");
+            return Response.status(404).build();
+        } else {
+            log.info("Game " + name + " requested");
+            return Response.ok().entity(game).build();
+        }
     }
 
     @PUT
