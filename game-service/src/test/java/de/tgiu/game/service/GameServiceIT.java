@@ -2,10 +2,10 @@ package de.tgiu.game.service;
 
 import de.tgiu.game.entity.Size;
 import io.quarkus.test.junit.QuarkusTest;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import static io.restassured.RestAssured.*;
+import static io.restassured.RestAssured.given;
+import static io.restassured.RestAssured.when;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
@@ -15,14 +15,11 @@ import static org.hamcrest.Matchers.is;
  */
 @QuarkusTest
 public class GameServiceIT {
-    @BeforeAll
-    static void init() {
-        // delete possibly existing test values
-        given().pathParam("name", "test_game1").when().delete("games/{name}");
-    }
-    
     @Test
     void crudGames() {
+        // 0) delete possibly existing test values
+        given().pathParam("name", "test_game1").when().delete("games/{name}");
+
         // 1) empty games at start
         when().get("/games").then().statusCode(200).assertThat().body("size()", is(0));
         given().pathParam("name", "test_game1").when().get("/games/{name}").then().statusCode(404);
