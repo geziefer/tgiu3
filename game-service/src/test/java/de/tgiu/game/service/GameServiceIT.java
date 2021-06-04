@@ -9,10 +9,6 @@ import static io.restassured.RestAssured.when;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
-
-/**
- *  Note: This integration test assumes an empty running MongoDB.
- */
 @QuarkusTest
 public class GameServiceIT {
     @Test
