@@ -1,5 +1,8 @@
 package de.tgiu.game.entity;
 
+import io.quarkus.runtime.annotations.RegisterForReflection;
+
+@RegisterForReflection
 public class Game {
     public String name;
     public Size size;
