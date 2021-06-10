@@ -10,7 +10,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
 @QuarkusTest
-public class GameServiceIT {
+public class GameServiceTest {
     @Test
     void crudGames() {
         // 0) delete possibly existing test values
